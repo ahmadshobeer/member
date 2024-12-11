@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get('auth/login', [AuthController::class, 'index'])->name('login');
+Route::get('user/profile', [ProfileController::class, 'index'])->name('user/profile');
