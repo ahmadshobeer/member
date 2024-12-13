@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function pelanggan()
+    {
+        return $this->hasOne(MMember::class, 'no_pelanggan', 'no_pelanggan');
+    }
 }

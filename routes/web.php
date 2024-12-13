@@ -18,6 +18,11 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', function () {
     return view('dashboard');
 });
+/* 
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post'); */
 
 Route::get('auth/login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+
 Route::get('user/profile', [ProfileController::class, 'index'])->name('user/profile');
