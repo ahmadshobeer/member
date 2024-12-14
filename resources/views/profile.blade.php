@@ -14,10 +14,10 @@
                 </div>
 
                 <div class="list-group list-group-flush" role="tablist">
-                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab">
+                    <a class="list-group-item list-group-item-action " data-bs-toggle="list" href="#account" role="tab">
                         Account
                     </a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password" role="tab">
+                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#password" role="tab">
                         Password
                     </a>
                     
@@ -27,7 +27,7 @@
 
         <div class="col-md-9 col-xl-10">
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                <div class="tab-pane fade " id="account" role="tabpanel">
 
                     <div class="card">
                         <div class="card-header">
@@ -39,8 +39,8 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="mb-3">
-                                            <label class="form-label" for="inputUsername">Username</label>
-                                            <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                                            <label class="form-label" for="inputUsername">No Telp</label>
+                                            <input type="text" class="form-control" id="phone" name="phone" value="{{$user->phone}}" placeholder="Username">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="inputUsername">Biography</label>
@@ -68,24 +68,39 @@
 
 
                 </div>
-                <div class="tab-pane fade" id="password" role="tabpanel">
+                <div class="tab-pane fade show active" id="password" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Password</h5>
-
-                            <form>
+                            @if(session('success'))
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert-message">
+                                    {{ session('success') }}
+                                </div>
+                            </div>
+                                {{-- <p style="color: green;"></p> --}}
+                            @endif
+                            <form action="{{ route('password.update') }}" method="POST">
+                                @csrf
                                 <div class="mb-3">
                                     <label class="form-label" for="inputPasswordCurrent">Current password</label>
-                                    <input type="password" class="form-control" id="inputPasswordCurrent">
+                                    <input type="password" class="form-control" name="current_password" id="inputPasswordCurrent">
+                                    @error('current_password')
+                                        <p style="color: red;">{{ $message }}</p>
+                                    @enderror
                                     <small><a href="#">Forgot your password?</a></small>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="inputPasswordNew">New password</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew">
+                                    <input type="password" class="form-control" name="new_password" id="inputPasswordNew">
+                                    @error('new_password')
+                                        <p style="color: red;">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="inputPasswordNew2">Verify password</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew2">
+                                    <input type="password" class="form-control" name="new_password_confirmation" id="inputPasswordNew2">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </form>

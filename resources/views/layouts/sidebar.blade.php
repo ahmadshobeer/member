@@ -9,8 +9,8 @@
                 Menu
             </li>
 
-            <li class="sidebar-item {{ Request::is('/') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ url('/') }}">
+            <li class="sidebar-item {{ Request::is('/dashboard') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ url('/dashboard') }}">
                 <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
             </a>
             </li>
@@ -141,14 +141,14 @@
       </a>
 
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                        <img src="{{ asset('img/avatars/avatar.jpg') }}" class="avatar img-fluid rounded me-1" alt="User Image" /> <span class="text-dark">Charles </span>
+                        <img src="{{ asset('img/avatars/avatar.jpg') }}" class="avatar img-fluid rounded me-1" alt="User Image" /> <span class="text-dark">{{ $nm_pelanggan }} </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('user/profile') }}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                        <a class="dropdown-item" href="{{ route('my-account') }}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <a class="dropdown-item" href="/logout">Log out</a>
                     </div>
                 </li>
             </ul>
