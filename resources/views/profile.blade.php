@@ -27,6 +27,7 @@
 
         <div class="col-md-9 col-xl-10">
             <div class="tab-content">
+                
                 <div class="tab-pane fade " id="account" role="tabpanel">
 
                     <div class="card">
@@ -35,32 +36,33 @@
                             <h5 class="card-title mb-0">Public info</h5>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form id="avatar-form" enctype="multipart/form-data" action="{{ route('avatar.update') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="mb-3">
                                             <label class="form-label" for="inputUsername">No Telp</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" value="{{$user->phone}}" placeholder="Username">
+                                            <input type="text" class="form-control" id="phone" name="phone" value="{{$user->phone}}" placeholder="Username" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label" for="inputUsername">Biography</label>
-                                            <textarea rows="2" class="form-control" id="inputBio"
-                                                placeholder="Tell something about yourself"></textarea>
+                                            <label class="form-label" for="inputUsername">Ganti Foto</label>
+                                            <input type="file" class="form-control" id="avatar" name="avatar"  placeholder="File gambar" required>
+                                            <small>Maksimal 2MB</small>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="text-center">
-                                            <img alt="Charles Hall" src="{{ asset('img/avatars/avatar.jpg') }}" class="rounded-circle img-responsive mt-2"
+                                            <img alt="{{ $nm_pelanggan }}" src="{{ auth()->user()->url_img ? Storage::url(auth()->user()->url_img) : asset('img/avatars/user.png') }}" class="rounded-circle img-responsive mt-2"
                                                 width="128" height="128" />
-                                            <div class="mt-2">
+                                           {{--  <div class="mt-2">
                                                 <span class="btn btn-primary"><i class="fas fa-upload"></i> Upload</span>
-                                            </div>
-                                            <small>For best results, use an image at least 128px by 128px in .jpg format</small>
+                                            </div> --}}
+                                            
                                         </div>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>
 
                         </div>
@@ -71,7 +73,6 @@
                 <div class="tab-pane fade show active" id="password" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Password</h5>
                             @if(session('success'))
                             <div class="alert alert-success alert-dismissible" role="alert">
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -79,8 +80,10 @@
                                     {{ session('success') }}
                                 </div>
                             </div>
-                                {{-- <p style="color: green;"></p> --}}
+                                
                             @endif
+                            <h5 class="card-title">Password</h5>
+                           
                             <form action="{{ route('password.update') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
@@ -113,5 +116,35 @@
     </div>
 
 </div>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+        $('#avatar-form').on('submit', function(e) {
+            e.preventDefault(); // Mencegah form submit biasa
+    
+            var formData = new FormData(this); // Menyiapkan data form
+    
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false, // Jangan mengubah data menjadi string
+                contentType: false, // Jangan set contentType, karena formData sudah menangani itu
+                success: function(response) {
+                    // Menampilkan avatar baru
+                    // $('#avatar-image').attr('src', response.avatar_url);
+                    alert('Avatar berhasil diubah!');
+                },
+                error: function(xhr, status, error) {
+                    alert('Terjadi kesalahan saat mengupload avatar.');
+                }
+            });
+        });
+    });
+    </script>
 @endsection
 

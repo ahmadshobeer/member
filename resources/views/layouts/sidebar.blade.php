@@ -141,7 +141,7 @@
       </a>
 
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                        <img src="{{ asset('img/avatars/avatar.jpg') }}" class="avatar img-fluid rounded me-1" alt="User Image" /> <span class="text-dark">{{ $nm_pelanggan }} </span>
+                        <img src="{{ auth()->user()->url_img ? Storage::url(auth()->user()->url_img) : asset('img/avatars/user.png') }}" class="avatar img-fluid rounded me-1" alt="User Image" /> <span class="text-dark">{{ $nm_pelanggan }} </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="{{ route('my-account') }}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>

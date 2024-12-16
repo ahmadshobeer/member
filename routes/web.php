@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -33,5 +34,10 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/', function () {
+    return Auth::check() ? redirect('/dashboard') : redirect('/auth/login');
+});
+
 Route::get('auth/login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::post('/change-avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');

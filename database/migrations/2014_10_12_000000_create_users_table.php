@@ -21,7 +21,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('no_pelanggan');
-            $table->text('url_img');
+            $table->text('url_img')->nullable();
             $table->string('user_status')->default('1');
         });
     }
