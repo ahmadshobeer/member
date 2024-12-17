@@ -41,3 +41,4 @@ Route::get('/', function () {
 Route::get('auth/login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
 Route::post('/change-avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');
+Route::get('auth/reset-password', [AuthController::class, 'resetForm'])->name('reset');

@@ -45,6 +45,11 @@
                                             <input type="text" class="form-control" id="phone" name="phone" value="{{$user->phone}}" placeholder="Username" readonly>
                                         </div>
                                         <div class="mb-3">
+                                            <label class="form-label" for="inputUsername">Paket Langganan</label>
+                                            <input type="text" class="form-control" id="phone" name="phone" value="{{ $tarif->nm_paket }}" placeholder="Username" readonly>
+                                            {{-- <input type="text" class="form-control" id="desk_paket" name="desk_paket" value="" placeholder="Nama Paket" readonly> --}}
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="form-label" for="inputUsername">Ganti Foto</label>
                                             <input type="file" class="form-control" id="avatar" name="avatar"  placeholder="File gambar" required>
                                             <small>Maksimal 2MB</small>

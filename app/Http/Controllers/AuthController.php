@@ -65,6 +65,11 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/auth/login');
     }
+
+    public function resetForm()
+    {
+        return view('auth.reset-password');
+    } 
    /*  public function login(Request $request)
     {
         // Validasi input

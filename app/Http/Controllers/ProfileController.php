@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MMember;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +20,18 @@ class ProfileController extends Controller
         $user = Auth::user();
         $pelanggan = $user->pelanggan; // Ambil data pelanggan yang terkait
 
+        if ($pelanggan) {
+            $tarif = $pelanggan->tarif; // Ambil tarif yang terkait dengan pelanggan
+        } else {
+            $tarif = null;
+        }
+        
+        // var_dump($tarif);
+        // $tarifs = MMember::with('tarif_member')->get();
+
         return view('profile', [
             'user' => $user,
+            'tarif' => $tarif,
             'nm_pelanggan' => $pelanggan ? $pelanggan->nama : null,
         ]);
     }
