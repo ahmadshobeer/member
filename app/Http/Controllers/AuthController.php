@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Password;
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 
 class AuthController extends Controller
 {
@@ -70,33 +74,69 @@ class AuthController extends Controller
     {
         return view('auth.reset-password');
     } 
-   /*  public function login(Request $request)
-    {
-        // Validasi input
+
+    public function forgotPassword(Request $request){
+       /*  $request->validate(['phone' => 'required']);
+     
+        $status = Password::sendResetLink(
+            $request->only('phone')
+        );
+     
+        return $status === Password::RESET_LINK_SENT
+                    ? back()->with(['status' => __($status)])
+                    : back()->withErrors(['phone' => __($status)]); */
+
+                    $validator = Validator::make($request->all(), [
+                        'phone' => 'required|numeric|min:10',
+                    ]);
+            
+                    if ($validator->fails()) {
+                        return redirect()->back()->withErrors($validator)->withInput();
+                    }
+            
+                    // Mencari user berdasarkan no_hp
+                    $user = User::where('phone', $request->phone)->first();
+            
+                    if (!$user) {
+                        return back()->with('error', 'Nomor HP tidak ditemukan.');
+                    }
+            
+                    // Kirimkan link reset password
+                    $response = Password::sendResetLink(
+                        ['email' => $user->email]
+                    );
+            
+                    if ($response == Password::RESET_LINK_SENT) {
+                        return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
+                    } else {
+                        return back()->withErrors(['email' => 'Terjadi kesalahan saat mengirimkan email reset password.']);
+                    }
+                
+    }
+
+    public function resetPassword (Request $request){
         $request->validate([
-            'phone' => 'required',
-            'password' => 'required',
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6|confirmed',
         ]);
-
-        // Ambil data dari form
-        $credentials = $request->only('phone', 'password');
-
-        // Cek kredensial
-        if (Auth::attempt($credentials)) {
-            // Ambil user yang sedang login
-            $user = Auth::user();
-
-            // Ambil data pelanggan terkait
-            $member = $user->member;
-
-            // Redirect atau tampilkan data
-            return view('/', [
-                'user' => $user,
-                'member' => $member,
-            ]);
-        }
-
-        // Jika login gagal
-        return redirect()->back()->withErrors(['phone' => 'Invalid credentials.']);
-    } */
+     
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+     
+                $user->save();
+     
+                event(new PasswordReset($user));
+            }
+        );
+     
+        return $status === Password::PASSWORD_RESET
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withErrors(['email' => [__($status)]]);
+    }
+  
 }

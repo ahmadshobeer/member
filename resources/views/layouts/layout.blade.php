@@ -46,10 +46,16 @@
 	</div>
 
 	<script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/datatables.js') }}"></script>
+	
 
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
+
+			$(".datatables").DataTable({
+				responsive: true
+			});
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
 			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");

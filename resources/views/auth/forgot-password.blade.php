@@ -6,7 +6,7 @@
             <div class="d-table-cell align-middle">
 
                 <div class="text-center mt-4">
-                    <h1 class="h2">Reset Password</h1>
+                    <h1 class="h2">Reset password</h1>
                     <p class="lead">
                         Masukkan No HP yang terdaftar
                     </p>
@@ -15,25 +15,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="m-sm-3">
-                            <form action="/reset-password" method="POST">
+                            <form action="/forgot-password" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input class="form-control form-control-lg" type="email" name="email" id="phone" placeholder="Masukkan nomer HP" required />
+                                    <label class="form-label">No HP</label>
+                                    <input class="form-control form-control-lg" type="text" name="phone" id="phone" placeholder="Masukkan nomer HP" />
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Password</label>
-                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Password Baru"  required/>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Konfirmasi Password</label>
-                                    <input class="form-control form-control-lg" type="password" name="password_confirmation" id="password" placeholder="Masukkan Password Baru"  required/>
-                                </div>
-                                    <input class="form-control form-control-lg" type="hidden" value="{{ $token }}" name="token" id="token" placeholder="Masukkan Password Baru"  />
-                              
                                 <div class="d-grid gap-2 mt-3">
                                     <button type="submit" class="btn btn-lg btn-primary">Reset password</button>
-                                    
+                                    {{-- <a class='btn btn-lg btn-primary' href='/'>Reset password</a> --}}
                                 </div>
                             </form>
                         </div>

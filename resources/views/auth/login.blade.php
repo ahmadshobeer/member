@@ -60,10 +60,18 @@
 							</form>
 						</div>
 						<div id="result" style="margin-top: 20px;"></div>
+						@if (session('status'))
+						<div class="alert alert-success" role="alert">
+							<div class="alert-message">
+								<span>{{session('status')}}</span>
+							</div>
+							
+						</div>
+					@endif
 					</div>
 				</div>
 				<div class="text-center mb-3">
-					Lupa Password ? <a href="/auth/forgot-pasword">Klik Disini</a>
+					Lupa Password ? <a href="/forgot-password">Klik Disini</a>
 				</div>
 			</div>
 		</div>
