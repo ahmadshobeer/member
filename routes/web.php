@@ -45,18 +45,31 @@ Route::get('/', function () {
 Route::middleware(['guest'])->group(function () {
     Route::get('auth/login', [AuthController::class, 'index'])->name('login');
     Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+   
+   
     Route::get('/forgot-password', function () {
         return view('auth.forgot-password');
     })->name('password.request');
 
+
+    // Route untuk menampilkan form reset password
+  
+    // Route untuk memproses reset password
+    // Route::post('/password-reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
+
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
-    Route::get('/reset-password/{token}', function (string $token) {
+
+
+
+    /* Route::get('/reset-password/{token}', function (string $token) {
         return view('auth.reset-password', ['token' => $token]);
-    })->name('password.reset');
+    })->name('password.reset'); */
 
+  
 
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    // Route::post('/reset-password', [AuthController::class, 'resetPassword']);
    /*  Route::post('/reset-password', function (Request $request) {
         
     })->middleware('guest')->name('password.update'); */
@@ -68,3 +81,9 @@ Route::middleware(['guest'])->group(function () {
     // Route::get('reset-password', [AuthController::class, 'resetForm'])->name('reset.password ');
 });
 
+Route::get('/password-reset-form', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password-reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
+// Route::get('/password-reset', [AuthController::class, 'resetForm'])->name('password.reset');
+
+    

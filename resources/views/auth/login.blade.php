@@ -22,12 +22,24 @@
 									<strong>Hello there!</strong> A simple primary alert—check it out!
 								</div>
 							</div> --}}
+							@if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <div class="alert-message">
+                                    <ul> 
+                                        @foreach ($errors->all() as $error)
+                                        <li> {{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        @endif
 							<form id="loginForm" method="POST" action="{{ route('login.post') }}" class="needs-validation" novalidate="">
 								@csrf
 								<div id="errors-list"></div>
 								
 								<div class="mb-3">
-									<label class="form-label">Email</label>
+									<label class="form-label">No HP</label>
 									<input class="form-control form-control-lg" type="text" name="phone" placeholder="Enter your Phone" id="phone" required/>
 									<div class="invalid-feedback">
 										Please fill in your username
