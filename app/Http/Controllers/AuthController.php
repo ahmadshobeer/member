@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MApp;
 use App\Models\MPasswordResetToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'current_password' => ['required', 'current_password'], // Validasi password saat ini
-            'new_password' => ['required', 'min:5', 'confirmed'],   // Validasi password baru
+            'new_password' => ['required', 'min:6', 'confirmed'],   // Validasi password baru
         ]);
 
         // Update password pengguna
@@ -130,7 +131,10 @@ class AuthController extends Controller
     private function sendWithGuzzle($noHp,$resetUrl){
         $client = new Client();
 
-        $token = env('WA_TOKEN'); 
+    //   $token = MApp::pluck('token_wa'); 
+      $token = MApp::where('id', '1')->value('token_wa');
+        //  $token = env('WA_TOKEN'); 
+       // var_dump($token);
         $headers = [
             'Authorization' => $token
         ]; 
@@ -144,7 +148,7 @@ class AuthController extends Controller
             ],
             [
             'name' => 'message',
-            'contents' => "Halo, klik link berikut untuk reset password member anda $resetUrl. Balas dengan *Ya* agar link bisa diklik."
+            'contents' => "Halo, klik link berikut untuk reset password member anda \n$resetUrl. Balas dengan *Ya* agar link bisa diklik."
             ]
         ]];
 
